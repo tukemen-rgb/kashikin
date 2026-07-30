@@ -1,0 +1,132 @@
+<!-- @dsCard group="Components" name="設問" subtitle="解答前・解答後・引っかけの提示" -->
+<style>
+/* 配色は市販の過去問アプリ／問題集にならい、主色1色＋朱の強調で組んでいる。
+   影とグラデーションは使わず、面は罫線だけで区切る。 */
+:root{
+  /* 使う色は4つだけ。深緑＝操作、朱＝先へ進む／誤り、紺＝できた、紫＝あとで見直す。
+     主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
+  --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
+  --acc:#C6402A; --acc-2:#A93321;
+  --ok:#134E8C; --ok-2:#0E3C6D;
+  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
+  --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
+  --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
+  --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --shadow:none;
+  --disp:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
+  --gothic:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
+  --mono:Meiryo,"メイリオ","Meiryo UI",ui-monospace,monospace;
+  --r:4px; --rs:3px; --qsize:15.5px; --qlh:1.95;
+}
+@media (prefers-color-scheme:dark){:root{
+  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
+  --acc:#F2705A; --acc-2:#FF8C78;
+  --ok:#6FA8E8; --ok-2:#8DBCF0;
+  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#111419; --surface:#191D23; --sunken:#22272F;
+  --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
+  --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
+  --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --shadow:none;
+}}
+:root[data-theme="dark"]{
+  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
+  --acc:#F2705A; --acc-2:#FF8C78;
+  --ok:#6FA8E8; --ok-2:#8DBCF0;
+  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#111419; --surface:#191D23; --sunken:#22272F;
+  --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
+  --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
+  --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --shadow:none;
+}
+:root[data-theme="light"]{
+  /* 使う色は4つだけ。深緑＝操作、朱＝先へ進む／誤り、紺＝できた、紫＝あとで見直す。
+     主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
+  --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
+  --acc:#C6402A; --acc-2:#A93321;
+  --ok:#134E8C; --ok-2:#0E3C6D;
+  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
+  --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
+  --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
+  --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --shadow:none;
+}
+:root[data-size="s"]{--qsize:15px;--qlh:1.85}
+:root[data-size="l"]{--qsize:18.5px;--qlh:2.1}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+     font-family:var(--gothic);font-size:14.5px;line-height:1.8;
+     -webkit-text-size-adjust:100%}
+button,select{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--pri-2);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.ds{padding:20px 18px;display:flex;flex-direction:column;gap:18px;max-width:820px}
+.ds-h{font-size:11px;letter-spacing:.06em;color:var(--ink-3);
+      border-left:3px solid var(--pri);padding-left:8px;line-height:1.5}
+.ds-note{font-size:11.5px;color:var(--ink-3);line-height:1.75}
+.traps{background:var(--sunken);border:1px solid var(--rule-2);border-left:4px solid var(--acc);
+       border-radius:0 var(--rs) var(--rs) 0;padding:11px 14px;margin:0 0 15px}
+.traps .tl{font-size:11px;color:var(--acc);font-weight:700;margin-bottom:6px}
+.traps .ti{font-size:13px;line-height:1.8;color:var(--ink-2);margin-top:5px}
+.traps .ti b{color:var(--ink);font-weight:700;margin-right:7px}
+.stem{font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
+      margin:0 0 15px;letter-spacing:.015em;display:flex;flex-direction:column;gap:.42em}
+.stem .s{text-indent:1em}
+.stem .cue{border-bottom:2px solid var(--acc);font-weight:700;padding-bottom:1px}
+.stem .cue2{border-bottom:1px dashed var(--pri);font-weight:400;padding-bottom:1px}
+.dim{color:var(--ink-4)}
+.qtable{margin:0 0 15px;overflow-x:auto}
+.qtable table{border-collapse:collapse;font-size:13.5px;min-width:250px}
+.qtable caption{font-family:var(--disp);font-size:14px;text-align:left;padding-bottom:5px}
+.qtable th,.qtable td{border:1px solid var(--rule);padding:5px 13px}
+.qtable td:last-child{text-align:right;font-family:var(--mono)}
+.qtable thead th{background:var(--sunken);font-size:11.5px;color:var(--ink-2)}
+.note{font-size:12.5px;color:var(--ink-2);line-height:1.8;background:var(--sunken);
+      border:1px solid var(--rule-2);border-radius:var(--rs);padding:10px 13px;margin:0 0 15px;
+      display:flex;flex-direction:column;gap:.3em}
+@keyframes draw{to{stroke-dashoffset:0}}
+.opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.opt{position:relative;display:grid;grid-template-columns:26px 1fr;gap:10px;text-align:left;
+     width:100%;background:var(--surface);border:1px solid var(--rule);border-radius:var(--rs);
+     padding:11px 14px;font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
+     transition:border-color .12s,background .12s}
+.opt:hover:not([disabled]){border-color:var(--pri);background:var(--sunken)}
+.opt .m{font-family:var(--gothic);font-size:14px;color:var(--pri);font-weight:700;
+        line-height:var(--qlh);text-align:center}
+.opt .bd{display:flex;flex-direction:column;gap:.35em}
+.opt[disabled]{cursor:default}
+.opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,var(--surface))}
+.opt.wrong{border-color:var(--ng);background:color-mix(in srgb,var(--ng) 9%,var(--surface))}
+.opt.picked{border-width:2px}
+.opt.correct,.opt.wrong{padding-right:56px}
+.mark{position:absolute;right:11px;top:50%;width:38px;height:38px;margin-top:-19px;
+      pointer-events:none;overflow:visible}
+.mark path,.mark circle{fill:none;stroke:var(--acc);stroke-width:2.6;stroke-linecap:round;
+      opacity:.85;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+      animation:draw .42s cubic-bezier(.4,0,.2,1) forwards}
+.mark .s2{animation-delay:.16s}
+.verdict{display:flex;align-items:baseline;gap:11px;margin-bottom:12px;
+         font-family:var(--disp);font-size:17px;font-weight:700;flex-wrap:wrap}
+.verdict .r{font-weight:600;letter-spacing:.08em}
+.verdict.ok .r{color:var(--ok)}
+.verdict .a{font-family:var(--mono);font-size:13px;color:var(--ink-2)}
+.verdict .xp{font-family:var(--mono);font-size:12px;color:var(--gold)}
+.opt{padding:11px 12px}
+.mark{width:31px;height:31px;margin-top:-15px;right:8px}
+:root[data-dim="off"] .dim{color:inherit}
+
+</style>
+<div class="ds">
+<div class="ds-h">解答前</div><div class="stem"><span class="s lead">貸金業法第13条の2第2項に規定する個人顧客の利益の保護に支障を生ずることがない契約として内閣府令で定めるもの<span class="dim">（以下、本問において「個人顧客の利益の保護に支障を生ずることがない契約」という。）</span>に該当するか否かに関する次の①〜④の記述のうち、その内容が<span class="cue">適切でないもの</span>を1つだけ選び、解答欄にその番号をマークしなさい。</span></div><div class="opts"><button class="opt"><span class="m">①</span><span class="bd">個人顧客を相手方とする不動産の建設もしくは購入に必要な資金に係る契約は、個人顧客の利益の保護に支障を生ずることがない契約に該当しない。</span></button><button class="opt"><span class="m">②</span><span class="bd">売却を予定している個人顧客の不動産の売却代金により弁済される貸付けに係る契約であって、当該個人顧客の返済能力を超えないと認められるもの。</span></button></div><div class="ds-h">解答後</div><div class="verdict ng"><span class="r">不正解</span><span class="a">正答 ①　選択 ②　0:41</span></div><div class="opts"><button class="opt correct" disabled><span class="m">①</span><span class="bd">個人顧客を相手方とする不動産の建設もしくは購入に必要な資金に係る契約。</span><svg class="mark" viewBox="0 0 40 40" style="--len:100"><circle cx="20" cy="20" r="15"/></svg></button><button class="opt wrong picked" disabled><span class="m">②</span><span class="bd">売却を予定している個人顧客の不動産の売却代金により弁済される貸付けに係る契約。</span><svg class="mark" viewBox="0 0 40 40" style="--len:40"><path d="M9 9 L31 31"/><path class="s2" d="M31 9 L9 31"/></svg></button></div><div class="ds-h">この問題で狙われている点</div><div class="traps"><div class="tl">この問題で狙われている点</div><div class="ti"><b>含む・含まない</b>「含まれる」と「含まれない」の入れ替えです。定義に何が入って何が入らないかを、境界の例で押さえてください。</div></div><p class="ds-note">正解は紺、不正解は朱。〇と✕はどちらも朱で手書き風に引く（日本の採点は〇も✕も赤ペンなので、色では区別しない）。本文は原文のまま。改行・濃度・下線だけで読みやすさを作る。</p>
+</div>

@@ -1,0 +1,158 @@
+<!-- @dsCard group="Components" name="一覧の行" subtitle="分野別・テーマ47件・解答履歴" -->
+<style>
+/* 配色は市販の過去問アプリ／問題集にならい、主色1色＋朱の強調で組んでいる。
+   影とグラデーションは使わず、面は罫線だけで区切る。 */
+:root{
+  /* 使う色は4つだけ。深緑＝操作、朱＝先へ進む／誤り、紺＝できた、紫＝あとで見直す。
+     主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
+  --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
+  --acc:#C6402A; --acc-2:#A93321;
+  --ok:#134E8C; --ok-2:#0E3C6D;
+  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
+  --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
+  --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
+  --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --shadow:none;
+  --disp:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
+  --gothic:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
+  --mono:Meiryo,"メイリオ","Meiryo UI",ui-monospace,monospace;
+  --r:4px; --rs:3px; --qsize:15.5px; --qlh:1.95;
+}
+@media (prefers-color-scheme:dark){:root{
+  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
+  --acc:#F2705A; --acc-2:#FF8C78;
+  --ok:#6FA8E8; --ok-2:#8DBCF0;
+  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#111419; --surface:#191D23; --sunken:#22272F;
+  --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
+  --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
+  --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --shadow:none;
+}}
+:root[data-theme="dark"]{
+  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
+  --acc:#F2705A; --acc-2:#FF8C78;
+  --ok:#6FA8E8; --ok-2:#8DBCF0;
+  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#111419; --surface:#191D23; --sunken:#22272F;
+  --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
+  --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
+  --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --shadow:none;
+}
+:root[data-theme="light"]{
+  /* 使う色は4つだけ。深緑＝操作、朱＝先へ進む／誤り、紺＝できた、紫＝あとで見直す。
+     主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
+  --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
+  --acc:#C6402A; --acc-2:#A93321;
+  --ok:#134E8C; --ok-2:#0E3C6D;
+  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ng:var(--acc); --gold:var(--ok);
+  --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
+  --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
+  --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
+  --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
+  --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --shadow:none;
+}
+:root[data-size="s"]{--qsize:15px;--qlh:1.85}
+:root[data-size="l"]{--qsize:18.5px;--qlh:2.1}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+     font-family:var(--gothic);font-size:14.5px;line-height:1.8;
+     -webkit-text-size-adjust:100%}
+button,select{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--pri-2);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.ds{padding:20px 18px;display:flex;flex-direction:column;gap:18px;max-width:820px}
+.ds-h{font-size:11px;letter-spacing:.06em;color:var(--ink-3);
+      border-left:3px solid var(--pri);padding-left:8px;line-height:1.5}
+.ds-note{font-size:11.5px;color:var(--ink-3);line-height:1.75}
+.secs{display:flex;flex-direction:column;background:var(--surface);
+      border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.secrow{display:grid;grid-template-columns:5px minmax(0,1fr) auto;gap:11px;align-items:center;
+        background:var(--surface);padding:9px 13px;width:100%;text-align:left;
+        border:none;border-top:1px solid var(--rule-2)}
+.secrow:first-child{border-top:none}
+.secrow:hover{background:var(--sunken)}
+.secrow .swatch{width:5px;height:26px;display:block}
+.secrow .body{display:block;min-width:0}
+.secrow .nm{font-family:var(--disp);font-size:14.5px;display:block;font-weight:700}
+.secrow .track{display:block;height:4px;background:var(--sunken);border-radius:2px;
+               overflow:hidden;margin-top:5px}
+.secrow .track i{display:block;height:100%;border-radius:2px}
+.secrow .val{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);text-align:right;
+             font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.5}
+.secrow .val em{font-style:normal;color:var(--ink-4);font-size:11px}
+.topics{display:flex;flex-direction:column;background:var(--surface);
+        border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.trow{position:relative;display:grid;grid-template-columns:5px minmax(0,1fr) 64px 48px;
+      gap:11px;align-items:center;background:var(--surface);padding:9px 13px;
+      width:100%;text-align:left;border:none;border-top:1px solid var(--rule-2);font-size:13px}
+.trow:first-child{border-top:none}
+.trow:hover{background:var(--sunken)}
+.trow .tsec{width:5px;height:28px;display:block}
+.trow .tbody{display:block;min-width:0}
+.trow .tn{display:block;font-family:var(--disp);font-size:14.5px;font-weight:700;
+          line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .tart{display:block;font-size:10.5px;color:var(--ink-3);margin-top:2px;
+            overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .f{font-family:var(--mono);font-size:12px;color:var(--ink-2);text-align:right;
+         line-height:1.35;font-variant-numeric:tabular-nums}
+.trow .f em{font-style:normal;font-size:9.5px;color:var(--ink-4);font-family:var(--gothic)}
+.trow .acc{font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;
+           font-variant-numeric:tabular-nums}
+.trow .tbar{position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
+.trow .tbar i{display:block;height:100%}
+.list{display:flex;flex-direction:column;background:var(--surface);
+      border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.li{background:var(--surface);padding:8px 12px;display:flex;gap:10px;align-items:flex-start;
+    text-align:left;width:100%;font-size:13px;line-height:1.7;border:none;
+    border-top:1px solid var(--rule-2)}
+.li:first-child{border-top:none}
+.li:hover{background:var(--sunken)}
+.li .id{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex-shrink:0;width:74px}
+.li .ans{font-family:var(--mono);font-size:11.5px;flex-shrink:0}
+.li .ans .no{color:var(--ng)}
+.li .tx{flex:1;color:var(--ink-2)}
+.trow{grid-template-columns:5px minmax(0,1fr) 56px 42px;gap:9px;padding:9px 11px}
+.trow .tn{font-size:13.5px}
+</style>
+<div class="ds">
+<div class="ds-h">分野別</div><div class="secs"><button class="secrow"><span class="swatch" style="background:var(--sec1)"></span>
+        <span class="body"><span class="nm">法令</span>
+        <span class="track"><i style="width:64%;background:var(--sec1)"></i></span></span>
+        <span class="val">355/551<br><em>68%</em></span></button><button class="secrow"><span class="swatch" style="background:var(--sec2)"></span>
+        <span class="body"><span class="nm">貸付実務</span>
+        <span class="track"><i style="width:59%;background:var(--sec2)"></i></span></span>
+        <span class="val">170/290<br><em>67%</em></span></button><button class="secrow"><span class="swatch" style="background:var(--sec3)"></span>
+        <span class="body"><span class="nm">資金需要者保護</span>
+        <span class="track"><i style="width:60%;background:var(--sec3)"></i></span></span>
+        <span class="val">59/99<br><em>70%</em></span></button><button class="secrow"><span class="swatch" style="background:var(--sec4)"></span>
+        <span class="body"><span class="nm">財務会計</span>
+        <span class="track"><i style="width:60%;background:var(--sec4)"></i></span></span>
+        <span class="val">36/60<br><em>63%</em></span></button></div><div class="ds-h">テーマ（全47件）</div><div class="topics"><button class="trow"><span class="tsec" style="background:var(--sec1)"></span>
+        <span class="tbody"><span class="tn">総量規制・過剰貸付けの禁止</span><span class="tart">貸金業法第13条の2（過剰貸付け等の禁止）</span></span>
+        <span class="f">72問<br><em>20回で出題</em></span>
+        <span class="acc" style="color:var(--acc)">63%</span>
+        <span class="tbar"><i style="width:78%;background:var(--sec1)"></i></span></button><button class="trow"><span class="tsec" style="background:var(--sec1)"></span>
+        <span class="tbody"><span class="tn">契約締結時の書面</span><span class="tart">貸金業法第17条（契約締結時の書面の交付）</span></span>
+        <span class="f">52問<br><em>20回で出題</em></span>
+        <span class="acc" style="color:var(--ok)">70%</span>
+        <span class="tbar"><i style="width:66%;background:var(--sec1)"></i></span></button><button class="trow"><span class="tsec" style="background:var(--sec2)"></span>
+        <span class="tbody"><span class="tn">意思表示・代理・行為能力</span><span class="tart"></span></span>
+        <span class="f">53問<br><em>19回で出題</em></span>
+        <span class="acc" style="color:var(--acc)">67%</span>
+        <span class="tbar"><i style="width:48%;background:var(--sec2)"></i></span></button><button class="trow"><span class="tsec" style="background:var(--sec4)"></span>
+        <span class="tbody"><span class="tn">貸借対照表</span><span class="tart"></span></span>
+        <span class="f">12問<br><em>11回で出題</em></span>
+        <span class="acc" style="color:var(--ok)">86%</span>
+        <span class="tbar"><i style="width:34%;background:var(--sec4)"></i></span></button></div><div class="ds-h">解答の履歴</div><div class="list"><div class="li"><span class="id">第7回 問22</span><span class="ans"><span class="no">誤 ②→④</span></span><span class="tx">個人顧客の利益の保護に支障を生ずることが…</span></div><div class="li"><span class="id">第3回 問30</span><span class="ans"><span class="yes">正 ①</span></span><span class="tx">期限に関する次の①〜④の記述のうち…</span></div></div><p class="ds-note">行は角を立てたまま1pxの罫線で区切る。左端の5px帯が分野で、行の下端の細い帯が到達度。カードを浮かせず、1画面に入る件数を稼ぐ。</p>
+</div>
