@@ -11,6 +11,7 @@ app/index.html        学習アプリ（単一ファイル。ダブルクリッ�
 app/template.html     アプリの雛形（データ注入前）
 design/               デザインシステム（Claude Design に push できる形）
 design/data/          画面設計用の見本データ（見本24問・JSON と XLSX）
+restored/             令和元年〜令和5年の5年分を作り直した .docx
 tools/                データ生成・検証スクリプト
 research/             資格アプリ4,554本のUI/UX調査
 research/緑基調アプリ300.md  スクショの画素から基調色を測った色調査
