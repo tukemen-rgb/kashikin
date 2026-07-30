@@ -109,6 +109,9 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .ring circle{fill:none;stroke-width:6}
 .ring .bgc{stroke:var(--sunken)}
 .ring .fg{stroke:var(--vio);stroke-linecap:round;transition:stroke-dasharray .6s cubic-bezier(.3,0,.2,1)}
+/* 復習が溜まっていないときは「これから始める」ので、紫ではなく主色で出す */
+.why.start .ring .fg{stroke:var(--pri)} .why.start .msg b{color:var(--pri)}
+.why.met .ring text{fill:var(--pri)}
 .ring text{font-family:var(--mono);font-size:17px;fill:var(--ink);text-anchor:middle;
            font-variant-numeric:tabular-nums}
 .why .msg{font-family:var(--disp);font-size:16px;line-height:1.65;font-weight:700}
@@ -133,12 +136,14 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .day .d{width:26px;height:26px;margin:0 auto;border-radius:50%;border:1.5px solid var(--rule-2);
         display:grid;place-items:center;font-size:12px;color:var(--ink-4)}
 .day .d.on{background:var(--pri);border-color:var(--pri);color:var(--on-pri)}
-.day .d.today{border-color:var(--acc);border-width:2px}
+.day .d.today{border-color:var(--pri);border-width:2px}
+.day .d.on.today{box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--pri)}
 .srow{display:flex;align-items:center;justify-content:center;gap:22px;
       padding-top:12px;border-top:1px solid var(--rule-2)}
 .srow div{text-align:center}
 .srow .n{font-family:var(--mono);font-size:22px;color:var(--acc);line-height:1.2;
          font-variant-numeric:tabular-nums}
+.srow .n.zero{color:var(--ink-4)}          /* 0 を朱で出すと失点のように見える */
 .srow .l{font-size:10.5px;color:var(--ink-3);letter-spacing:.08em}
 .weeks{display:flex;align-items:flex-end;gap:5px;height:58px;margin-top:14px;
        padding-top:12px;border-top:1px solid var(--rule-2)}
@@ -245,7 +250,12 @@ button,select{font:inherit;color:inherit;cursor:pointer}
           background:var(--surface);display:grid;place-items:center;flex-shrink:0}
 .rankseal span{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--gold)}
 .rankbar .meta{flex:1;min-width:0}
-.rankbar .x{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:5px}
+.rankbar .x{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 12px;
+            font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:6px}
+.rankbar .x span{white-space:nowrap}       /* 「正答率 —」だけが折り返さないように */
+.rankbar .x b{color:var(--ink-2);font-weight:600}
+.streak .hint{font-size:11.5px;color:var(--ink-3);text-align:center;
+              padding-top:11px;margin-top:12px;border-top:1px solid var(--rule-2);line-height:1.7}
 .xpbar{display:block;height:6px;background:var(--sunken);border:1px solid var(--rule-2);overflow:hidden}
 .xpbar i{display:block;height:100%;background:var(--gold)}
 
@@ -665,6 +675,7 @@ function renderHome(){
   const flag=Object.keys(S.q).filter(k=>S.q[k].flag).length;
   const doneT=S.days[today()]||0,r=rankOf(S.xp),cfg=S.cfg;
 
+  const goalMet=due===0&&doneT>=S.goal&&S.goal>0;
   const ringMax=Math.max(due||0,S.goal,1);
   const ringVal=due||Math.max(0,S.goal-doneT);
   const C=2*Math.PI*26;
@@ -691,7 +702,10 @@ function renderHome(){
     for(let k=0;k<7;k++){const d=new Date(e);d.setDate(d.getDate()-k);sum+=S.days[dkey(d)]||0;}
     wks.push([sum,`${e.getMonth()+1}/${e.getDate()}`]);mx=Math.max(mx,sum);
   }
-  const wkHTML=wks.map(([v,l])=>`<div class="wk"><i style="height:${Math.max(2,v/mx*40)}px"></i><span class="t">${l}</span></div>`).join('');
+  const everStudied=Object.keys(S.days).length>0;
+  const wkHTML=wks.some(([v])=>v>0)
+    ? wks.map(([v,l])=>`<div class="wk"><i style="height:${Math.max(2,v/mx*40)}px"></i><span class="t">${l}</span></div>`).join('')
+    : '';
 
   const pcRes=passChance(),acc=sectionAcc();
   const pcol=p=>p>=60?'var(--ok)':p>=30?'var(--pri)':'var(--acc)';
@@ -731,18 +745,18 @@ function renderHome(){
     <div class="rankbar">
       <div class="rankseal"><span>${r.grade}</span></div>
       <div class="meta">
-        <div class="x">${S.xp} XP${r.next?`　次は ${r.nextName} まであと ${r.next-S.xp}`:'　最高位'}　／　解答済 ${tried(S)}/1000　正答率 ${n?pct(n-g,n)+'%':'—'}</div>
+        <div class="x"><span><b>${S.xp}</b> XP</span>${r.next?`<span>次は ${r.nextName} まであと <b>${r.next-S.xp}</b></span>`:'<span>最高位</span>'}<span>解答済 <b>${tried(S)}</b>/1000</span><span>正答率 <b>${n?pct(n-g,n)+'%':'—'}</b></span></div>
         <span class="xpbar"><i style="width:${r.next?pct(S.xp-r.base,r.next-r.base):100}%"></i></span>
       </div>
     </div>
 
     <div class="hero">
-      <div class="why">
+      <div class="why${due>0?'':' start'}${goalMet?' met':''}">
         <svg class="ring" viewBox="0 0 60 60" aria-hidden="true">
           <circle class="bgc" cx="30" cy="30" r="26"/>
           <circle class="fg" cx="30" cy="30" r="26" transform="rotate(-90 30 30)"
-            stroke-dasharray="${(Math.min(1,ringVal/ringMax)*C).toFixed(1)} ${C}"/>
-          <text x="30" y="36">${ringVal}</text></svg>
+            stroke-dasharray="${((goalMet?1:Math.min(1,ringVal/ringMax))*C).toFixed(1)} ${C}"/>
+          <text x="30" y="${goalMet?37:36}"${goalMet?' style="font-size:22px"':''}>${goalMet?'✓':ringVal}</text></svg>
         <div><div class="msg">${headline}</div><div class="sub">${sub}</div></div>
       </div>
       <button class="cta" id="startBtn">学習をはじめる</button>
@@ -764,12 +778,13 @@ function renderHome(){
     <h2 class="h2">続ける</h2>
     <div class="streak">
       <div class="days">${daysHTML}</div>
-      <div class="srow">
-        <div><div class="n">${S.streak}</div><div class="l">連続日数</div></div>
-        <div><div class="n">${S.best||0}</div><div class="l">自己ベスト</div></div>
-        <div><div class="n">${doneT}<span style="font-size:12px;color:var(--ink-3)">/${S.goal}</span></div><div class="l">今日</div></div>
+      ${everStudied?`<div class="srow">
+        <div><div class="n${S.streak?'':' zero'}">${S.streak}</div><div class="l">連続日数</div></div>
+        <div><div class="n${S.best?'':' zero'}">${S.best||0}</div><div class="l">自己ベスト</div></div>
+        <div><div class="n${doneT?'':' zero'}">${doneT}<span style="font-size:12px;color:var(--ink-3)">/${S.goal}</span></div><div class="l">今日</div></div>
       </div>
-      <div class="weeks">${wkHTML}</div>
+      ${wkHTML?`<div class="weeks">${wkHTML}</div>`:''}`
+      :'<p class="hint">解いた日にチェックが付きます。今日が1日目です。</p>'}
     </div>
 
     ${pcRes?`<h2 class="h2">合格可能性の目安</h2>
