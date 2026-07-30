@@ -42,3 +42,40 @@ python3 tools/restore/verify.py       # 検証
 ```
 
 原文の出典は日本貸金業協会が公開している試験問題PDF・正答PDFです。
+
+## この .docx は「出力」であって「入力」ではありません
+
+**これらの .docx を解析して `data/questions.json` を作る必要はありません。順序が逆です。**
+
+```
+公式PDF  →  tools/parse.py …  →  data/questions.json  →  restored/*.docx
+                                        ↑ここが正
+```
+
+`data/questions.json` には第14〜18回の250問がすでに入っており、
+正答は公式正答PDFと1000/1000で一致しています。`app/index.html` にも同じデータが焼き込み済みです。
+`restored/*.docx` はその questions.json から生成した読み物なので、
+逆流させても新しい情報は増えず、往復で表記が崩れる危険だけが増えます。
+
+**最初にアップロードされた .docx を取り込むのはさらに危険です。**
+令和2年は正解番号が23問誤り、令和4年は中身が令和3年の問題、
+令和元年は問5⇔問6・問7⇔問8が入れ替わっていました（`検証結果.md`）。
+取り込めば検証済みのデータが壊れます。
+
+## そのまま使えるJSON
+
+第14〜18回の250問だけを抜いたものを置いてあります。解析は不要です。
+
+```
+restored/questions_14-18.json
+```
+
+| フィールド | 中身 |
+|---|---|
+| `stem` | 設問（原文） |
+| `statements` | 記述ａ〜ｄ（原文） |
+| `options` | 選択肢①〜④（原文） |
+| `note` | 注記（原文） |
+| `answer` | 正答（1〜4）。公式正答PDFと一致 |
+| `table` | 図表問題のみ、構造化した表 |
+| `section` `theme` `format` `negative` `arts` `traps` `similar` `topicRank` | 分類と付帯情報 |
