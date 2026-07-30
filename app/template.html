@@ -9,10 +9,10 @@
   --ink:#171A22; --ink-2:#5A6172; --ink-3:#8E96A8; --ink-4:#B8BECC;
   --rule:#E3E6EF; --rule-2:#EDEFF6; --on-pri:#fff;
   --shadow:0 1px 2px rgba(23,26,34,.05), 0 4px 16px rgba(23,26,34,.05);
-  --disp:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","BIZ UDPGothic",system-ui,sans-serif;
-  --gothic:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","BIZ UDPGothic",system-ui,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --r:14px; --rs:10px; --qsize:16px; --qlh:1.9;
+  --disp:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
+  --gothic:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
+  --mono:Meiryo,"メイリオ","Meiryo UI",ui-monospace,monospace;
+  --r:14px; --rs:10px; --qsize:15.5px; --qlh:1.95;
 }
 @media (prefers-color-scheme:dark){:root{
   --pri:#8B9BFF; --pri-2:#A3AFFF; --pri-soft:#232842;
@@ -49,7 +49,7 @@
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--gothic);
-     font-size:15px;line-height:1.75;-webkit-text-size-adjust:100%}
+     font-size:14.5px;line-height:1.8;-webkit-text-size-adjust:100%}
 button,select{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--pri-2);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -178,6 +178,35 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .trow .tbar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--rule-2)}
 .trow .tbar i{display:block;height:100%;opacity:.75}
 .tag.theme{border-color:transparent;background:var(--pri-soft);color:var(--pri)}
+
+
+/* 診断 */
+.dlist{display:flex;flex-direction:column;gap:9px}
+.dcard{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+       padding:15px 17px;box-shadow:var(--shadow)}
+.dcard.good{opacity:.9}
+.dh{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.dk{font-size:10px;letter-spacing:.1em;color:var(--pri);background:var(--pri-soft);
+    border-radius:99px;padding:3px 9px;font-weight:700}
+.dt{font-family:var(--disp);font-size:16px;font-weight:700;flex:1;min-width:0}
+.dv{font-family:var(--mono);font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.dv small{font-size:13px}
+.dbar{position:relative;display:block;height:8px;background:var(--sunken);
+      border-radius:99px;overflow:visible}
+.dbar i{display:block;height:100%;border-radius:99px;transition:width .6s cubic-bezier(.3,0,.2,1)}
+.dbar b{position:absolute;top:-4px;width:2px;height:16px;background:var(--ink-3);border-radius:1px}
+.dm{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:7px}
+.dtip{font-size:13.5px;line-height:1.85;color:var(--ink-2);margin:10px 0 0}
+.dgo{margin-top:11px;background:var(--pri-soft);border:none;border-radius:99px;
+     padding:8px 16px;font-size:12.5px;color:var(--pri);font-weight:700}
+.dgo:hover{filter:brightness(.96)}
+/* 設問の引っかけ表示 */
+.traps{background:color-mix(in srgb,var(--acc) 7%,var(--surface));
+       border:1px solid color-mix(in srgb,var(--acc) 26%,transparent);
+       border-radius:var(--rs);padding:12px 15px;margin:0 0 15px}
+.traps .tl{font-size:10.5px;letter-spacing:.12em;color:var(--acc);font-weight:700;margin-bottom:7px}
+.traps .ti{font-size:13px;line-height:1.8;color:var(--ink-2);margin-top:5px}
+.traps .ti b{color:var(--ink);font-weight:700;margin-right:7px}
 
 /* 到達度 */
 .matrix{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
@@ -376,6 +405,8 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 const DB = /*__DATA__*/;
 const META = /*__META__*/;
 const THEMES = /*__TOPICS__*/;
+const TRAPS = /*__TRAPS__*/;
+const TRAPNAME = Object.fromEntries(TRAPS.map(t=>[t.id,t]));
 const BY = Object.fromEntries(DB.map(q=>[q.id,q]));
 
 const SECS=['法令','貸付実務','資金需要者保護','財務会計'];
@@ -412,7 +443,7 @@ const BADGES=[
 ];
 
 /* ===== 保存 ===== */
-const blank=()=>({q:{},exams:[],xp:0,days:{},streak:0,best:0,last:null,badges:{},
+const blank=()=>({q:{},ms:{},exams:[],xp:0,days:{},streak:0,best:0,last:null,badges:{},
                   goal:20,combo:0,bestCombo:0,cfg:{n:20,mode:'auto',scope:'all'}});
 let S=(()=>{try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&v.q)return Object.assign(blank(),v);}catch(e){}return blank();})();
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
@@ -472,6 +503,86 @@ function pickQuestions(n,mode,scope){
     return s*(0.75+Math.random()*0.5);
   };
   return pool.map(q=>[weight(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,n).map(x=>x[1]);
+}
+
+
+/* ===== 誤答傾向の診断 =====
+   解答履歴を、引っかけの型・テーマ・出題形式・否定形・解答時間の5つの軸で集計し、
+   足を引っ張っている順にアドバイスを組み立てる。LLMは使わず、
+   問題文から抽出した引っかけの型と、あなた自身の正誤だけを材料にしている。 */
+function diagnose(){
+  const done = DB.filter(q=>(S.q[q.id]||{}).n>0);
+  if(done.length<20) return {ready:false, need:20-done.length, cards:[]};
+  const rate = qs => {
+    const n=qs.reduce((a,q)=>a+S.q[q.id].n,0), g=qs.reduce((a,q)=>a+S.q[q.id].ng,0);
+    return n?{n, ng:g, acc:(n-g)/n}:null;
+  };
+  const all = rate(done), cards=[];
+
+  // 1) 引っかけの型
+  TRAPS.forEach(t=>{
+    const qs=done.filter(q=>q.traps.includes(t.id));
+    const r=rate(qs);
+    if(!r||r.n<5) return;
+    cards.push({kind:'引っかけ', key:t.id, title:t.name, acc:r.acc, n:r.n, ng:r.ng,
+      gap:all.acc-r.acc, tip:t.tip,
+      pick:()=>shuffle(DB.filter(q=>q.traps.includes(t.id)))});
+  });
+  // 2) テーマ
+  THEMES.forEach(t=>{
+    const qs=done.filter(q=>q.theme===t.name);
+    const r=rate(qs);
+    if(!r||r.n<5) return;
+    cards.push({kind:'テーマ', key:'th:'+t.name, title:t.name, acc:r.acc, n:r.n, ng:r.ng,
+      gap:all.acc-r.acc,
+      tip:`このテーマは過去20回中${t.kaiCount}回・計${t.count}問出ています。`+
+          (t.arts.length?`根拠は ${t.arts.map(a=>a.a+'（'+a.n+'）').join('、')} です。`:'')+
+          '出題頻度が高いので、ここを埋めると点が伸びます。',
+      pick:()=>shuffle(DB.filter(q=>q.theme===t.name))});
+  });
+  // 3) 出題形式
+  [['count','個数問題','ａ〜ｄを1つずつ○×で確定させないと当たりません。'+
+      '設問カードの記号を押して○×を付けながら読む癖をつけてください。'],
+   ['combo','組合せ問題','2つ確実に切れれば正解できます。自信のある記述から潰してください。'],
+   ['single','単純択一','消去法より、各肢を単独で○×判定するほうが速く正確です。']
+  ].forEach(([f,name,tip])=>{
+    const qs=done.filter(q=>q.format===f);
+    const r=rate(qs);
+    if(!r||r.n<5) return;
+    cards.push({kind:'出題形式', key:'fmt:'+f, title:name, acc:r.acc, n:r.n, ng:r.ng,
+      gap:all.acc-r.acc, tip, pick:()=>shuffle(DB.filter(q=>q.format===f))});
+  });
+  // 4) 否定形
+  const neg=rate(done.filter(q=>q.negative)), pos=rate(done.filter(q=>!q.negative));
+  if(neg&&pos&&neg.n>=8&&neg.acc<pos.acc-0.05){
+    cards.push({kind:'読み方', key:'neg', title:'「適切でないもの」を選ぶ問題',
+      acc:neg.acc, n:neg.n, ng:neg.ng, gap:pos.acc-neg.acc,
+      tip:`肯定形は${Math.round(pos.acc*100)}%取れているのに、否定形は${Math.round(neg.acc*100)}%です。`+
+          '設問の「適切でないもの」を読み飛ばしています。まず末尾の一文を読んでから肢に入ってください。',
+      pick:()=>shuffle(DB.filter(q=>q.negative))});
+  }
+  // 5) 解答時間
+  const ms=Object.entries(S.ms||{}).filter(([id])=>BY[id]);
+  if(ms.length>=20){
+    const fast=ms.filter(([,v])=>v.t/v.c<25000).map(([id])=>BY[id]);
+    const slow=ms.filter(([,v])=>v.t/v.c>90000).map(([id])=>BY[id]);
+    const rf=rate(fast.filter(q=>(S.q[q.id]||{}).n>0));
+    if(rf&&rf.n>=8&&rf.acc<all.acc-0.1)
+      cards.push({kind:'解き方', key:'fast', title:'25秒未満で答えた問題',
+        acc:rf.acc, n:rf.n, ng:rf.ng, gap:all.acc-rf.acc,
+        tip:'速く答えた問題の正答率が全体より低く出ています。本番は1問あたり2分24秒使えます。'+
+            '見た瞬間に選ばず、全肢に目を通してから決めてください。',
+        pick:()=>shuffle(fast)});
+    if(slow.length>=8)
+      cards.push({kind:'解き方', key:'slow', title:'1分半以上かかった問題',
+        acc:(rate(slow)||{acc:0}).acc, n:slow.length, ng:0, gap:0.001,
+        tip:`${slow.length}問で1分半以上かかっています。本番は50問120分＝1問2分24秒。`+
+            'この分野は時間を食う前提で、後回しにする判断も持っておいてください。',
+        pick:()=>shuffle(slow)});
+  }
+  cards.sort((a,b)=>b.gap*Math.min(1,b.n/20)-a.gap*Math.min(1,a.n/20));
+  return {ready:true, all, cards:cards.filter(c=>c.gap>0.02).slice(0,6),
+          strong:cards.filter(c=>c.gap<-0.05).sort((a,b)=>a.gap-b.gap).slice(0,3)};
 }
 
 /* ===== 合格可能性の推定 =====
@@ -660,6 +771,7 @@ function renderHome(){
     <div class="modes">
       <button class="mode" data-go="examPick"><span class="t">模試</span><span class="d">50問・2時間。その回の合格基準点で判定</span></button>
       <button class="mode" data-go="review" ${weak+flag?'':'disabled'}><span class="t">復習</span><span class="d">間違えた問題と付箋${weak+flag?` ${new Set([...ids.filter(k=>S.q[k].ng>0),...Object.keys(S.q).filter(k=>S.q[k].flag)]).size}問`:''}</span></button>
+      <button class="mode" data-go="diag"><span class="t">弱点診断</span><span class="d">間違えやすい型と、答えるときの着目点</span></button>
       <button class="mode" data-go="stats"><span class="t">成績</span><span class="d">分野別・テーマ別・回別の正答率</span></button>
       <button class="mode" data-go="matrix"><span class="t">到達度</span><span class="d">第1〜20回×分野の一覧</span></button>
     </div>
@@ -688,7 +800,7 @@ function renderHome(){
     const k=b.dataset.go;
     if(k==='matrix'){const m=G('matrixBox');m.hidden=!m.hidden;
       if(!m.hidden)m.scrollIntoView({behavior:'smooth',block:'start'});return;}
-    ({examPick:renderExamPick,review:startReview,stats:renderStats})[k]();});
+    ({examPick:renderExamPick,review:startReview,stats:renderStats,diag:renderDiag})[k]();});
   app.querySelectorAll('.cell').forEach(b=>b.onclick=()=>{
     const kai=+b.dataset.kai,sec=b.dataset.msec,y=META.years.find(v=>v.kai===kai);
     startSession(DB.filter(q=>q.kai===kai&&(sec==='*'||q.sectionShort===sec)),'practice',
@@ -734,6 +846,47 @@ function renderTopics(){
   bindTopics();
 }
 
+
+/* ===== 弱点診断 ===== */
+function renderDiag(){
+  homeBtn.hidden=false;barSlot.innerHTML='';topInfo.innerHTML='';readBtn.hidden=true;
+  const d=diagnose();
+  app.className='wrap';
+  if(!d.ready){
+    app.innerHTML=`<h1 class="h1">弱点診断</h1>
+      <p class="lede">解答履歴から、間違えやすい型と着目すべき点をまとめます。</p>
+      <p class="empty">あと ${d.need} 問解くと診断できます。</p>`;
+    return;
+  }
+  const pc=x=>Math.round(x*100);
+  const card=(c,weak)=>`
+    <div class="dcard${weak?'':' good'}">
+      <div class="dh"><span class="dk">${c.kind}</span>
+        <span class="dt">${esc(c.title)}</span>
+        <span class="dv" style="color:${weak?'var(--ng)':'var(--ok)'}">${pc(c.acc)}<small>%</small></span></div>
+      <div class="dbar"><i style="width:${pc(c.acc)}%;background:${weak?'var(--ng)':'var(--ok)'}"></i>
+        <b style="left:${pc(d.all.acc)}%"></b></div>
+      <div class="dm">${c.n}回解答／${c.ng}回不正解　全体平均は ${pc(d.all.acc)}%</div>
+      ${weak?`<p class="dtip">${esc(c.tip)}</p>
+        <button class="dgo" data-diag="${esc(c.key)}">この型だけ演習する</button>`:''}
+    </div>`;
+  app.innerHTML=`
+    <h1 class="h1">弱点診断</h1>
+    <p class="lede">延べ${d.all.n}回の解答を、引っかけの型・テーマ・出題形式・読み方・解答時間の5つで分解しました。</p>
+    ${d.cards.length?`<h2 class="h2">足を引っ張っているところ</h2>
+      <div class="dlist">${d.cards.map(c=>card(c,true)).join('')}</div>`
+      :'<p class="empty">全体平均を大きく下回る項目はありません。このまま進めてください。</p>'}
+    ${d.strong.length?`<h2 class="h2">得意なところ</h2>
+      <div class="dlist">${d.strong.map(c=>card(c,false)).join('')}</div>`:''}
+    <div class="foot">この診断は、問題文から機械的に抽出した「引っかけの型」と、
+      あなた自身の正誤・解答時間だけを材料に算出しています。文章の自動生成は行っていません。</div>`;
+  const map={};
+  d.cards.forEach(c=>map[c.key]=c);
+  app.querySelectorAll('[data-diag]').forEach(b=>b.onclick=()=>{
+    const c=map[b.dataset.diag];
+    if(c) startSession(c.pick().slice(0,20),'practice',c.title);});
+}
+
 /* ===== 模試・復習 ===== */
 function startReview(){startSession(shuffle(DB.filter(q=>{const r=S.q[q.id];return r&&(r.ng>0||r.flag);})),'practice','復習');}
 function renderExamPick(){
@@ -773,6 +926,8 @@ function tick(){clearInterval(timerId);
       el.classList.toggle('warn',left<600000);}
   },250);}
 const lap=()=>{if(ses){ses.ms[ses.i]+=Date.now()-qT0;qT0=Date.now();}};
+function logTime(id,ms){if(ms<1000||ms>15*60000)return;
+  const m=S.ms[id]||(S.ms[id]={t:0,c:0}); m.t+=ms; m.c++;}
 
 function renderQ(){
   const q=ses.qs[ses.i],picked=ses.ans[ses.i],shown=ses.shown[ses.i],r=S.q[q.id]||{};
@@ -806,6 +961,10 @@ function renderQ(){
       <span class="r">${picked===q.answer?'正解':'不正解'}</span>
       <span class="a">正答 ${MARKS[q.answer-1]}${picked&&picked!==q.answer?`　選択 ${MARKS[picked-1]}`:''}　${mmss(ses.ms[ses.i])}</span>
       ${picked===q.answer?`<span class="xp">+${r.n===1?10:4} XP</span>`:''}</div>`:'';
+  const trap=(shown&&q.traps.length)?`<div class="traps">
+      <div class="tl">この問題で狙われている点</div>
+      ${q.traps.map(t=>`<div class="ti"><b>${TRAPNAME[t].name}</b>${esc(TRAPNAME[t].tip)}</div>`).join('')}
+    </div>`:'';
   const after=(shown&&ses.mode!=='exam')?`<div class="after">
       ${q.similar&&q.similar.length?`<button id="simBtn">似ている問題 ${q.similar.length}問</button>`:''}
       <button data-topic="${esc(q.theme)}">「${esc(q.theme)}」をまとめて</button>
@@ -835,7 +994,7 @@ function renderQ(){
     ${tableHTML}${stmtHTML}
     ${q.note?`<div class="note">${proseHTML(q.note)}</div>`:''}
     <div class="opts">${optHTML}</div>
-    ${after}${navHTML}`;
+    ${trap}${after}${navHTML}`;
 
   app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
   app.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{lap();ses.i=+b.dataset.jump;renderQ();});
@@ -859,7 +1018,7 @@ function choose(n){
   ses.ans[ses.i]=n;ses.shown[ses.i]=true;
   const r=rec(q.id),first=r.n===0;r.n++;r.last=Date.now();
   const ok=n===q.answer; if(!ok)r.ng++;
-  schedule(r,ok);
+  schedule(r,ok); logTime(q.id,ses.ms[ses.i]);
   const gain=ok?(first?10:4):1;
   S.xp+=gain;ses.gain+=gain;
   S.combo=ok?S.combo+1:0;S.bestCombo=Math.max(S.bestCombo||0,S.combo);
@@ -893,7 +1052,7 @@ function finishExam(){
   clearInterval(timerId);lap();
   let gain=0;
   ses.qs.forEach((q,i)=>{const r=rec(q.id),first=r.n===0;r.n++;r.last=Date.now();
-    const ok=ses.ans[i]===q.answer;if(!ok)r.ng++;schedule(r,ok);
+    const ok=ses.ans[i]===q.answer;if(!ok)r.ng++;schedule(r,ok);logTime(q.id,ses.ms[i]);
     gain+=ok?(first?10:4):1;});
   S.xp+=gain;ses.gain=gain;touchDay(ses.qs.length);
   const score=ses.qs.filter((q,i)=>ses.ans[i]===q.answer).length;
