@@ -10,6 +10,7 @@ data/themes.json/.csv 47テーマの一覧（出題数・代表条文つき）
 app/index.html        学習アプリ（単一ファイル。ダブルクリックで開けます）
 app/template.html     アプリの雛形（データ注入前）
 design/               デザインシステム（Claude Design に push できる形）
+design/data/          画面設計用の見本データ（見本24問・JSON と XLSX）
 tools/                データ生成・検証スクリプト
 research/             資格アプリ4,554本のUI/UX調査
 research/緑基調アプリ300.md  スクショの画素から基調色を測った色調査
