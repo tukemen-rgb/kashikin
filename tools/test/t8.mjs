@@ -16,7 +16,7 @@ await p.click('[data-kai="6"]'); await p.waitForTimeout(300);
 for(let i=0;i<50;i++){ await p.click(`[data-jump="${i}"]`); await p.click('.opt[data-n="2"]'); }
 await p.click('[data-jump="49"]'); await p.click('#submit'); await p.waitForTimeout(400);
 console.log('採点:',(await p.textContent('.result .score')).replace(/\s+/g,''),
-            (await p.textContent('.judge')).trim(),'|',(await p.textContent('.result .line')).trim());
+            (await p.textContent('.stamp')).trim(),'|',(await p.textContent('.result .line')).trim());
 console.log('XP表示:',(await p.textContent('.gained').catch(()=>'なし')).trim());
 await p.click('#back'); await p.waitForTimeout(300);
 const st=await p.$$eval('.stat .v',n=>n.map(x=>x.textContent.trim()));

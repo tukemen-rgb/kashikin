@@ -15,6 +15,9 @@
   --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
   --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
   --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --foil:#A8791F; --foil-2:#E3C46A;       /* 段位・実績・合格証の箔。分野色ではない */
+  --field-1:#0C5730; --field-2:#083D22;   /* 合格証の地 */
+  --seal:#B3301F;                          /* 朱印 */
   --shadow:none;
   --disp:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
   --gothic:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
@@ -32,6 +35,9 @@
   --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
   --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
   --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --foil:#D9B45C; --foil-2:#F0DB9E;
+  --field-1:#0E4A2C; --field-2:#07301C;
+  --seal:#E05A46;
   --shadow:none;
 }}
 :root[data-theme="dark"]{
@@ -45,6 +51,9 @@
   --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
   --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
   --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --foil:#D9B45C; --foil-2:#F0DB9E;
+  --field-1:#0E4A2C; --field-2:#07301C;
+  --seal:#E05A46;
   --shadow:none;
 }
 :root[data-theme="light"]{
@@ -60,6 +69,9 @@
   --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
   --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
   --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --foil:#A8791F; --foil-2:#E3C46A;       /* 段位・実績・合格証の箔。分野色ではない */
+  --field-1:#0C5730; --field-2:#083D22;   /* 合格証の地 */
+  --seal:#B3301F;                          /* 朱印 */
   --shadow:none;
 }
 :root[data-size="s"]{--qsize:15px;--qlh:1.85}
@@ -80,6 +92,7 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .traps .tl{font-size:11px;color:var(--acc);font-weight:700;margin-bottom:6px}
 .traps .ti{font-size:13px;line-height:1.8;color:var(--ink-2);margin-top:5px}
 .traps .ti b{color:var(--ink);font-weight:700;margin-right:7px}
+.verdict .xp{color:var(--foil)}
 .stem{font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
       margin:0 0 15px;letter-spacing:.015em;display:flex;flex-direction:column;gap:.42em;
       max-width:42em}

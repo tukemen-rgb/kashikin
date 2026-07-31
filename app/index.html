@@ -15,6 +15,9 @@
   --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
   --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
   --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --foil:#A8791F; --foil-2:#E3C46A;       /* 段位・実績・合格証の箔。分野色ではない */
+  --field-1:#0C5730; --field-2:#083D22;   /* 合格証の地 */
+  --seal:#B3301F;                          /* 朱印 */
   --shadow:none;
   --disp:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
   --gothic:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
@@ -32,6 +35,9 @@
   --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
   --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
   --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --foil:#D9B45C; --foil-2:#F0DB9E;
+  --field-1:#0E4A2C; --field-2:#07301C;
+  --seal:#E05A46;
   --shadow:none;
 }}
 :root[data-theme="dark"]{
@@ -45,6 +51,9 @@
   --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
   --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
   --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --foil:#D9B45C; --foil-2:#F0DB9E;
+  --field-1:#0E4A2C; --field-2:#07301C;
+  --seal:#E05A46;
   --shadow:none;
 }
 :root[data-theme="light"]{
@@ -60,6 +69,9 @@
   --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
   --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
   --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --foil:#A8791F; --foil-2:#E3C46A;       /* 段位・実績・合格証の箔。分野色ではない */
+  --field-1:#0C5730; --field-2:#083D22;   /* 合格証の地 */
+  --seal:#B3301F;                          /* 朱印 */
   --shadow:none;
 }
 :root[data-size="s"]{--qsize:15px;--qlh:1.85}
@@ -245,13 +257,17 @@ button,select{font:inherit;color:inherit;cursor:pointer}
       font-size:11px;color:var(--ink-4)}
 .cell:hover{border-color:var(--pri);position:relative;z-index:2}
 .cell.has{color:var(--on-pri);border-color:transparent}
-.cell.perfect{outline:2px solid var(--surface);outline-offset:-3px;font-weight:700}
+.cell.perfect{outline:2px solid var(--foil-2);outline-offset:-3px;font-weight:700}
 
 /* 段位 */
 .rankbar{display:flex;align-items:center;gap:13px;margin-bottom:13px}
-.rankseal{width:48px;height:48px;border:2px solid var(--gold);
-          background:var(--surface);display:grid;place-items:center;flex-shrink:0}
-.rankseal span{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--gold)}
+.rankseal{position:relative;width:52px;height:52px;flex-shrink:0;display:grid;place-items:center;
+          border:2px solid var(--foil);border-radius:2px;
+          background:linear-gradient(145deg,
+            color-mix(in srgb,var(--foil-2) 26%,var(--surface)),var(--surface) 62%)}
+.rankseal::after{content:"";position:absolute;inset:3px;border:1px solid var(--foil);opacity:.4}
+.rankseal span{position:relative;font-family:var(--disp);font-size:18px;font-weight:800;
+               color:var(--foil)}
 .rankbar .meta{flex:1;min-width:0}
 .rankbar .x{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 12px;
             font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:6px}
@@ -260,7 +276,8 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .streak .hint{font-size:11.5px;color:var(--ink-3);text-align:center;
               padding-top:11px;margin-top:12px;border-top:1px solid var(--rule-2);line-height:1.7}
 .xpbar{display:block;height:6px;background:var(--sunken);border:1px solid var(--rule-2);overflow:hidden}
-.xpbar i{display:block;height:100%;background:var(--gold)}
+.xpbar i{display:block;height:100%;
+         background:linear-gradient(90deg,var(--foil),var(--foil-2))}
 
 .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
 .mode{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
@@ -273,9 +290,10 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:5px}
 .badge{border:1px solid var(--rule-2);border-radius:var(--rs);padding:9px 10px;
        background:var(--surface);opacity:.42}
-.badge.on{opacity:1;border-color:var(--gold)}
+.badge.on{opacity:1;border-color:var(--foil);
+          background:linear-gradient(150deg,color-mix(in srgb,var(--foil-2) 20%,var(--surface)),var(--surface) 64%)}
 .badge .bt{font-family:var(--disp);font-size:12.5px;font-weight:700}
-.badge.on .bt{color:var(--gold)}
+.badge.on .bt{color:var(--foil)}
 .badge .bd{font-size:10px;color:var(--ink-3);line-height:1.45;margin-top:2px}
 
 /* 設問 */
@@ -285,6 +303,7 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .tag.sec{border:none;color:var(--on-pri);font-family:var(--gothic);letter-spacing:.04em}
 .tag.neg{border-color:var(--ng);color:var(--ng)}
 .tag.hot{border-color:var(--vio);color:var(--vio)}
+.verdict .xp{color:var(--foil)} .toast b{color:var(--foil-2)}
 .stem{font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
       margin:0 0 15px;letter-spacing:.015em;display:flex;flex-direction:column;gap:.42em;
       max-width:42em}                      /* 1行が長すぎると行を見失う */
@@ -370,26 +389,46 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .ghost[aria-pressed="true"]{border-color:var(--vio);color:var(--vio);background:var(--vio-soft)}
 .ghost[disabled]{opacity:.4}
 
-.result{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
-        padding:20px 18px 17px;margin-bottom:6px}
-.result .rtop{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}  /* .top はヘッダー用。衝突させない */
-.result .score{font-family:var(--mono);font-size:62px;line-height:.92;font-variant-numeric:tabular-nums;
-               letter-spacing:-.02em}
-.result .score small{font-size:22px;color:var(--ink-3);letter-spacing:0}
-.result .judge{font-family:var(--disp);font-size:17px;letter-spacing:.1em;font-weight:700;
-               padding:4px 13px;border-radius:var(--rs);color:var(--on-pri)}
-.result .judge.pass{background:var(--ok)} .result .judge.fail{background:var(--ng)}
-.result .line{font-size:12.5px;color:var(--ink-2);margin-top:8px;line-height:1.75}
+/* 合格証に見立てる。地は深緑、罫は箔、判定は朱印。
+   派手さはこの1画面に集約して、ほかは静かなままにする。 */
+.result{position:relative;border-radius:var(--r);margin-bottom:8px;overflow:hidden;
+        background:linear-gradient(160deg,var(--field-1),var(--field-2));
+        color:#fff;padding:3px}
+.result::before{content:"";position:absolute;inset:7px;border:1px solid var(--foil);
+                border-radius:2px;opacity:.55;pointer-events:none}
+.result::after{content:"";position:absolute;inset:10px;border:1px solid var(--foil);
+               border-radius:1px;opacity:.28;pointer-events:none}
+.result .inner{position:relative;padding:22px 22px 19px}
+.result .rtop{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}  /* .top はヘッダー用。衝突させない */
+.result .score{font-family:var(--mono);font-size:74px;line-height:.86;font-variant-numeric:tabular-nums;
+               letter-spacing:-.035em;color:#fff}
+.result .score small{font-size:24px;color:rgba(255,255,255,.62);letter-spacing:0}
+.result .line{font-size:12.5px;color:rgba(255,255,255,.82);margin-top:9px;line-height:1.8}
+.result .cap{font-size:10.5px;letter-spacing:.22em;color:var(--foil-2);margin-bottom:11px}
+/* 朱印。押される動きは1回だけ、控えめに */
+.stamp{margin-left:auto;width:82px;height:82px;flex-shrink:0;display:grid;place-items:center;
+       border:2.5px solid var(--seal);border-radius:50%;color:var(--seal);
+       font-family:var(--disp);font-weight:800;font-size:23px;letter-spacing:.08em;
+       transform:rotate(-8deg);background:rgba(255,255,255,.94);
+       animation:press .5s cubic-bezier(.2,1.5,.4,1) both}
+.stamp.fail{border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.1);
+            font-size:20px;animation:none}
+@keyframes press{from{opacity:0;transform:rotate(-8deg) scale(1.7)}}
+@media (prefers-reduced-motion:reduce){.stamp{animation:none}}
 /* 合格基準点との位置関係。1本の目盛りに得点と基準点を重ねる */
-.scale{position:relative;display:block;height:10px;background:var(--sunken);
-       border:1px solid var(--rule-2);margin:15px 0 7px}
-.scale i{position:absolute;left:0;top:0;bottom:0;display:block}
-.scale b{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--ink);border-radius:1px}
+.scale{position:relative;display:block;height:10px;background:rgba(0,0,0,.28);
+       border:1px solid rgba(255,255,255,.16);margin:24px 0 7px}  /* 目盛りの札を出すので切り取らない */
+.scale i{position:absolute;left:0;top:0;bottom:0;display:block;
+         animation:grow .8s cubic-bezier(.2,.8,.3,1) both}
+@keyframes grow{from{width:0!important}}
+@media (prefers-reduced-motion:reduce){.scale i{animation:none}}
+.scale b{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--foil-2);border-radius:1px}
 .scale b::after{content:attr(data-l);position:absolute;left:50%;transform:translateX(-50%);
-                top:-17px;font-family:var(--mono);font-size:10px;color:var(--ink-2);white-space:nowrap}
+                top:-17px;font-family:var(--mono);font-size:10px;color:var(--foil-2);white-space:nowrap}
 .scmark{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;
-        color:var(--ink-4);margin-bottom:10px}
-.gained{font-family:var(--mono);font-size:12.5px;color:var(--gold);margin-top:9px}
+        color:rgba(255,255,255,.5);margin-bottom:10px}
+.gained{font-family:var(--mono);font-size:12.5px;color:var(--foil-2);margin-top:10px;
+        padding-top:10px;border-top:1px solid rgba(255,255,255,.16)}
 .breakdown{display:flex;flex-direction:column;gap:8px}
 .br{display:grid;grid-template-columns:126px 1fr 60px;gap:10px;align-items:center;font-size:12.5px}
 .br .n{color:var(--ink-2)}
@@ -1128,13 +1167,15 @@ function renderResult(score,pass,answered){
   app.className='wrap';
   app.innerHTML=`
     <div class="result">
+     <div class="inner">
+      <div class="cap">${pass!=null?esc(ses.title)+'　模試':esc(ses.title)}</div>
       <div class="rtop">
         <span class="score">${score}<small>/${total}</small></span>
-        ${pass!=null?`<span class="judge ${ok?'pass':'fail'}">${ok?'合格':'不合格'}</span>`:''}
-        <span class="line" style="margin:0">正答率 ${pct(score,total)}%</span>
+        <span class="line" style="margin:0 0 6px">正答率<br><b style="font-family:var(--mono);font-size:19px;color:#fff">${pct(score,total)}%</b></span>
+        ${pass!=null?`<span class="stamp${ok?'':' fail'}">${ok?'合格':'不合格'}</span>`:''}
       </div>
       ${pass!=null?`<span class="scale">
-          <i style="width:${pct(score,total)}%;background:var(${ok?'--ok':'--ng'})"></i>
+          <i style="width:${pct(score,total)}%;background:var(${ok?'--foil-2':'--seal'})"></i>
           <b data-l="合格 ${pass}" style="left:calc(${pct(pass,total)}% - 1px)"></b></span>
         <div class="scmark"><span>0</span><span>${total}</span></div>
         <div class="line">${esc(ses.title)}の合格基準点は ${pass}問。今回は ${score}問で
@@ -1142,6 +1183,7 @@ function renderResult(score,pass,answered){
        :`<div class="line">${answered<ses.qs.length?`未解答 ${ses.qs.length-answered}問`:'全問解答'}</div>`}
       <div class="line">所要 ${mmss(totMs)}　1問あたり ${total?mmss(totMs/total):'—'}</div>
       ${ses.gain?`<div class="gained">+${ses.gain} XP　現在 ${rankOf(S.xp).grade}</div>`:''}
+     </div>
     </div>
     <h2 class="h2">分野別</h2>
     <div class="breakdown">${bySec.map(b=>`

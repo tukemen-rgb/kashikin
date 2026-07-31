@@ -15,6 +15,9 @@
   --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
   --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
   --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --foil:#A8791F; --foil-2:#E3C46A;       /* 段位・実績・合格証の箔。分野色ではない */
+  --field-1:#0C5730; --field-2:#083D22;   /* 合格証の地 */
+  --seal:#B3301F;                          /* 朱印 */
   --shadow:none;
   --disp:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
   --gothic:Meiryo,"メイリオ","Meiryo UI","Hiragino Sans","Noto Sans JP",sans-serif;
@@ -32,6 +35,9 @@
   --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
   --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
   --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --foil:#D9B45C; --foil-2:#F0DB9E;
+  --field-1:#0E4A2C; --field-2:#07301C;
+  --seal:#E05A46;
   --shadow:none;
 }}
 :root[data-theme="dark"]{
@@ -45,6 +51,9 @@
   --ink:#E9ECF1; --ink-2:#A6ADB9; --ink-3:#79808C; --ink-4:#565D68;
   --rule:#2E343D; --rule-2:#242931; --on-pri:#111419;
   --hdr:#0B2318; --hdr-ink:#E9ECF1; --hdr-line:rgba(255,255,255,.22); --on-acc:#111419;
+  --foil:#D9B45C; --foil-2:#F0DB9E;
+  --field-1:#0E4A2C; --field-2:#07301C;
+  --seal:#E05A46;
   --shadow:none;
 }
 :root[data-theme="light"]{
@@ -60,6 +69,9 @@
   --ink:#14181D; --ink-2:#4E5560; --ink-3:#7C838F; --ink-4:#A9B0BA;
   --rule:#D4D8DE; --rule-2:#E3E6EA; --on-pri:#fff;
   --hdr:#0A5A2C; --hdr-ink:#FFFFFF; --hdr-line:rgba(255,255,255,.34); --on-acc:#fff;
+  --foil:#A8791F; --foil-2:#E3C46A;       /* 段位・実績・合格証の箔。分野色ではない */
+  --field-1:#0C5730; --field-2:#083D22;   /* 合格証の地 */
+  --seal:#B3301F;                          /* 朱印 */
   --shadow:none;
 }
 :root[data-size="s"]{--qsize:15px;--qlh:1.85}
@@ -116,11 +128,15 @@ button,select{font:inherit;color:inherit;cursor:pointer}
       font-size:11px;color:var(--ink-4)}
 .cell:hover{border-color:var(--pri);position:relative;z-index:2}
 .cell.has{color:var(--on-pri);border-color:transparent}
-.cell.perfect{outline:2px solid var(--surface);outline-offset:-3px;font-weight:700}
+.cell.perfect{outline:2px solid var(--foil-2);outline-offset:-3px;font-weight:700}
 .rankbar{display:flex;align-items:center;gap:13px;margin-bottom:13px}
-.rankseal{width:48px;height:48px;border:2px solid var(--gold);
-          background:var(--surface);display:grid;place-items:center;flex-shrink:0}
-.rankseal span{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--gold)}
+.rankseal{position:relative;width:52px;height:52px;flex-shrink:0;display:grid;place-items:center;
+          border:2px solid var(--foil);border-radius:2px;
+          background:linear-gradient(145deg,
+            color-mix(in srgb,var(--foil-2) 26%,var(--surface)),var(--surface) 62%)}
+.rankseal::after{content:"";position:absolute;inset:3px;border:1px solid var(--foil);opacity:.4}
+.rankseal span{position:relative;font-family:var(--disp);font-size:18px;font-weight:800;
+               color:var(--foil)}
 .rankbar .meta{flex:1;min-width:0}
 .rankbar .x{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 12px;
             font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:6px}
@@ -129,13 +145,15 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .streak .hint{font-size:11.5px;color:var(--ink-3);text-align:center;
               padding-top:11px;margin-top:12px;border-top:1px solid var(--rule-2);line-height:1.7}
 .xpbar{display:block;height:6px;background:var(--sunken);border:1px solid var(--rule-2);overflow:hidden}
-.xpbar i{display:block;height:100%;background:var(--gold)}
+.xpbar i{display:block;height:100%;
+         background:linear-gradient(90deg,var(--foil),var(--foil-2))}
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:5px}
 .badge{border:1px solid var(--rule-2);border-radius:var(--rs);padding:9px 10px;
        background:var(--surface);opacity:.42}
-.badge.on{opacity:1;border-color:var(--gold)}
+.badge.on{opacity:1;border-color:var(--foil);
+          background:linear-gradient(150deg,color-mix(in srgb,var(--foil-2) 20%,var(--surface)),var(--surface) 64%)}
 .badge .bt{font-family:var(--disp);font-size:12.5px;font-weight:700}
-.badge.on .bt{color:var(--gold)}
+.badge.on .bt{color:var(--foil)}
 .badge .bd{font-size:10px;color:var(--ink-3);line-height:1.45;margin-top:2px}
 .matrix col.lab{width:44px}
 .srow{gap:14px}
