@@ -1,2 +1,6 @@
 node_modules/
 *.pdf
+
+# 生成物（tools/pipeline.py が作る）
+dist/
+node_modules/

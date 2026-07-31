@@ -7,8 +7,8 @@
      主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
   --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
   --acc:#C6402A; --acc-2:#A93321;
-  --ok:#134E8C; --ok-2:#0E3C6D;
-  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ok:#215DB3; --ok-2:#184A93;
+  --vio:#A463D8; --vio-2:#8A4CBD; --vio-soft:#F2EAF9;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
@@ -22,10 +22,10 @@
   --r:4px; --rs:3px; --qsize:15.5px; --qlh:1.95;
 }
 @media (prefers-color-scheme:dark){:root{
-  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
-  --acc:#F2705A; --acc-2:#FF8C78;
-  --ok:#6FA8E8; --ok-2:#8DBCF0;
-  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --pri:#3BA968; --pri-2:#59C184; --pri-soft:#132A1E;
+  --acc:#DE6446; --acc-2:#F07E60;
+  --ok:#4C7FD6; --ok-2:#6E9AE4;
+  --vio:#C662BC; --vio-2:#D67FCD; --vio-soft:#2C1F2B;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#111419; --surface:#191D23; --sunken:#22272F;
@@ -35,10 +35,10 @@
   --shadow:none;
 }}
 :root[data-theme="dark"]{
-  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
-  --acc:#F2705A; --acc-2:#FF8C78;
-  --ok:#6FA8E8; --ok-2:#8DBCF0;
-  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --pri:#3BA968; --pri-2:#59C184; --pri-soft:#132A1E;
+  --acc:#DE6446; --acc-2:#F07E60;
+  --ok:#4C7FD6; --ok-2:#6E9AE4;
+  --vio:#C662BC; --vio-2:#D67FCD; --vio-soft:#2C1F2B;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#111419; --surface:#191D23; --sunken:#22272F;
@@ -52,8 +52,8 @@
      主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
   --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
   --acc:#C6402A; --acc-2:#A93321;
-  --ok:#134E8C; --ok-2:#0E3C6D;
-  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ok:#215DB3; --ok-2:#184A93;
+  --vio:#A463D8; --vio-2:#8A4CBD; --vio-soft:#F2EAF9;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
@@ -83,16 +83,18 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .hero{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
       padding:14px 15px 13px;display:flex;flex-direction:column;gap:12px}
 .why{display:flex;align-items:center;gap:14px}
-.ring{width:64px;height:64px;flex-shrink:0}
+.ring{width:76px;height:76px;flex-shrink:0}
 .ring circle{fill:none;stroke-width:6}
 .ring .bgc{stroke:var(--sunken)}
 .ring .fg{stroke:var(--vio);stroke-linecap:round;transition:stroke-dasharray .6s cubic-bezier(.3,0,.2,1)}
 .why.start .ring .fg{stroke:var(--pri)}
 .why.met .ring text{fill:var(--pri)}
-.ring text{font-family:var(--mono);font-size:17px;fill:var(--ink);text-anchor:middle;
-           font-variant-numeric:tabular-nums}
-.why .msg{font-family:var(--disp);font-size:16px;line-height:1.65;font-weight:700}
-.why .msg b{color:var(--vio);font-size:19px;font-family:var(--mono);padding:0 1px}
+.ring text{font-family:var(--mono);font-size:19px;fill:var(--ink);text-anchor:middle;
+           font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.why .msg{font-family:var(--disp);font-size:17.5px;line-height:1.6;font-weight:700;
+          text-wrap:balance}
+.why .msg b{color:var(--vio);font-size:23px;font-family:var(--mono);padding:0 2px;
+            letter-spacing:-.01em}
 .why .sub{font-family:var(--gothic);font-size:11.5px;color:var(--ink-3);margin-top:2px}
 .cta{width:100%;background:var(--acc);color:var(--on-acc);border:none;border-radius:var(--rs);
      padding:15px;font-size:16.5px;font-weight:700;letter-spacing:.04em}

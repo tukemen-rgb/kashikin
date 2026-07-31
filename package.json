@@ -1,0 +1,14 @@
+{
+  "name": "kashikin",
+  "private": true,
+  "type": "module",
+  "description": "貸金業務取扱主任者 過去問1000＋学習アプリ",
+  "scripts": {
+    "build": "python3 tools/pipeline.py",
+    "test": "python3 tools/pipeline.py --only test"
+  },
+  "devDependencies": {
+    "docx": "^9.0.0",
+    "playwright": "^1.49.0"
+  }
+}

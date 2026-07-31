@@ -7,8 +7,8 @@
      主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
   --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
   --acc:#C6402A; --acc-2:#A93321;
-  --ok:#134E8C; --ok-2:#0E3C6D;
-  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ok:#215DB3; --ok-2:#184A93;
+  --vio:#A463D8; --vio-2:#8A4CBD; --vio-soft:#F2EAF9;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
@@ -22,10 +22,10 @@
   --r:4px; --rs:3px; --qsize:15.5px; --qlh:1.95;
 }
 @media (prefers-color-scheme:dark){:root{
-  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
-  --acc:#F2705A; --acc-2:#FF8C78;
-  --ok:#6FA8E8; --ok-2:#8DBCF0;
-  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --pri:#3BA968; --pri-2:#59C184; --pri-soft:#132A1E;
+  --acc:#DE6446; --acc-2:#F07E60;
+  --ok:#4C7FD6; --ok-2:#6E9AE4;
+  --vio:#C662BC; --vio-2:#D67FCD; --vio-soft:#2C1F2B;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#111419; --surface:#191D23; --sunken:#22272F;
@@ -35,10 +35,10 @@
   --shadow:none;
 }}
 :root[data-theme="dark"]{
-  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
-  --acc:#F2705A; --acc-2:#FF8C78;
-  --ok:#6FA8E8; --ok-2:#8DBCF0;
-  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --pri:#3BA968; --pri-2:#59C184; --pri-soft:#132A1E;
+  --acc:#DE6446; --acc-2:#F07E60;
+  --ok:#4C7FD6; --ok-2:#6E9AE4;
+  --vio:#C662BC; --vio-2:#D67FCD; --vio-soft:#2C1F2B;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#111419; --surface:#191D23; --sunken:#22272F;
@@ -52,8 +52,8 @@
      主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
   --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
   --acc:#C6402A; --acc-2:#A93321;
-  --ok:#134E8C; --ok-2:#0E3C6D;
-  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ok:#215DB3; --ok-2:#184A93;
+  --vio:#A463D8; --vio-2:#8A4CBD; --vio-soft:#F2EAF9;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
@@ -76,7 +76,8 @@ button,select{font:inherit;color:inherit;cursor:pointer}
       border-left:3px solid var(--pri);padding-left:8px;line-height:1.5}
 .ds-note{font-size:11.5px;color:var(--ink-3);line-height:1.75}
 .stem{font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
-      margin:0 0 15px;letter-spacing:.015em;display:flex;flex-direction:column;gap:.42em}
+      margin:0 0 15px;letter-spacing:.015em;display:flex;flex-direction:column;gap:.42em;
+      max-width:42em}
 .stem .s{text-indent:1em}
 .stem .cue{border-bottom:2px solid var(--acc);font-weight:700;padding-bottom:1px}
 .stem .cue2{border-bottom:1px dashed var(--pri);font-weight:400;padding-bottom:1px}
@@ -89,7 +90,7 @@ button,select{font:inherit;color:inherit;cursor:pointer}
           color:var(--pri);padding:2px 0;border-radius:2px;line-height:1.6}
 .stmt .mk:hover{background:var(--sunken)}
 .stmt .bd{font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
-          display:flex;flex-direction:column;gap:.35em}
+          display:flex;flex-direction:column;gap:.35em;max-width:40em}
 .stmt[data-v="o"]{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 6%,var(--surface))}
 .stmt[data-v="x"]{border-color:var(--ng);background:color-mix(in srgb,var(--ng) 6%,var(--surface))}
 .stmt[data-v="o"] .mk{color:var(--ok)}

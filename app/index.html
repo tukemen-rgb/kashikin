@@ -7,8 +7,8 @@
      主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
   --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
   --acc:#C6402A; --acc-2:#A93321;
-  --ok:#134E8C; --ok-2:#0E3C6D;
-  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ok:#215DB3; --ok-2:#184A93;
+  --vio:#A463D8; --vio-2:#8A4CBD; --vio-soft:#F2EAF9;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
@@ -22,10 +22,10 @@
   --r:4px; --rs:3px; --qsize:15.5px; --qlh:1.95;
 }
 @media (prefers-color-scheme:dark){:root{
-  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
-  --acc:#F2705A; --acc-2:#FF8C78;
-  --ok:#6FA8E8; --ok-2:#8DBCF0;
-  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --pri:#3BA968; --pri-2:#59C184; --pri-soft:#132A1E;
+  --acc:#DE6446; --acc-2:#F07E60;
+  --ok:#4C7FD6; --ok-2:#6E9AE4;
+  --vio:#C662BC; --vio-2:#D67FCD; --vio-soft:#2C1F2B;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#111419; --surface:#191D23; --sunken:#22272F;
@@ -35,10 +35,10 @@
   --shadow:none;
 }}
 :root[data-theme="dark"]{
-  --pri:#4FC182; --pri-2:#6FD39B; --pri-soft:#132A1E;
-  --acc:#F2705A; --acc-2:#FF8C78;
-  --ok:#6FA8E8; --ok-2:#8DBCF0;
-  --vio:#A98BE0; --vio-2:#BFA6EC; --vio-soft:#251F39;
+  --pri:#3BA968; --pri-2:#59C184; --pri-soft:#132A1E;
+  --acc:#DE6446; --acc-2:#F07E60;
+  --ok:#4C7FD6; --ok-2:#6E9AE4;
+  --vio:#C662BC; --vio-2:#D67FCD; --vio-soft:#2C1F2B;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#111419; --surface:#191D23; --sunken:#22272F;
@@ -52,8 +52,8 @@
      主色の深緑は、同ジャンル上位（宅建・行政書士・ITパスポートの過去問アプリ）の実測値に合わせた。 */
   --pri:#0F7A3C; --pri-2:#0A5C2C; --pri-soft:#E5F1E9;
   --acc:#C6402A; --acc-2:#A93321;
-  --ok:#134E8C; --ok-2:#0E3C6D;
-  --vio:#6A4A9C; --vio-2:#553B7E; --vio-soft:#EFEAF7;
+  --ok:#215DB3; --ok-2:#184A93;
+  --vio:#A463D8; --vio-2:#8A4CBD; --vio-soft:#F2EAF9;
   --ng:var(--acc); --gold:var(--ok);
   --sec1:var(--pri); --sec2:var(--acc); --sec3:var(--ok); --sec4:var(--vio);
   --bg:#F1F2F4; --surface:#FFFFFF; --sunken:#EDEFF2;
@@ -105,17 +105,19 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .hero{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
       padding:14px 15px 13px;display:flex;flex-direction:column;gap:12px}
 .why{display:flex;align-items:center;gap:14px}
-.ring{width:64px;height:64px;flex-shrink:0}
+.ring{width:76px;height:76px;flex-shrink:0}
 .ring circle{fill:none;stroke-width:6}
 .ring .bgc{stroke:var(--sunken)}
 .ring .fg{stroke:var(--vio);stroke-linecap:round;transition:stroke-dasharray .6s cubic-bezier(.3,0,.2,1)}
 /* 復習が溜まっていないときは「これから始める」ので、紫ではなく主色で出す */
 .why.start .ring .fg{stroke:var(--pri)} .why.start .msg b{color:var(--pri)}
 .why.met .ring text{fill:var(--pri)}
-.ring text{font-family:var(--mono);font-size:17px;fill:var(--ink);text-anchor:middle;
-           font-variant-numeric:tabular-nums}
-.why .msg{font-family:var(--disp);font-size:16px;line-height:1.65;font-weight:700}
-.why .msg b{color:var(--vio);font-size:19px;font-family:var(--mono);padding:0 1px}
+.ring text{font-family:var(--mono);font-size:19px;fill:var(--ink);text-anchor:middle;
+           font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.why .msg{font-family:var(--disp);font-size:17.5px;line-height:1.6;font-weight:700;
+          text-wrap:balance}
+.why .msg b{color:var(--vio);font-size:23px;font-family:var(--mono);padding:0 2px;
+            letter-spacing:-.01em}
 .why .sub{font-family:var(--gothic);font-size:11.5px;color:var(--ink-3);margin-top:2px}
 .cta{width:100%;background:var(--acc);color:var(--on-acc);border:none;border-radius:var(--rs);
      padding:15px;font-size:16.5px;font-weight:700;letter-spacing:.04em}
@@ -156,7 +158,8 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 /* 合格可能性 */
 .pass{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:13px 15px}
 .pass .hd{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
-.pass .pc{font-family:var(--mono);font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.pass .pc{font-family:var(--mono);font-size:40px;line-height:.95;font-variant-numeric:tabular-nums;
+          letter-spacing:-.02em}
 .pass .lb{font-size:12px;color:var(--ink-2)}
 .gauge{display:block;height:9px;background:var(--sunken);border-radius:2px;overflow:hidden}
 .gauge i{display:block;height:100%;border-radius:2px;transition:width .6s cubic-bezier(.3,0,.2,1)}
@@ -283,7 +286,8 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .tag.neg{border-color:var(--ng);color:var(--ng)}
 .tag.hot{border-color:var(--vio);color:var(--vio)}
 .stem{font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
-      margin:0 0 15px;letter-spacing:.015em;display:flex;flex-direction:column;gap:.42em}
+      margin:0 0 15px;letter-spacing:.015em;display:flex;flex-direction:column;gap:.42em;
+      max-width:42em}                      /* 1行が長すぎると行を見失う */
 .stem .s{text-indent:1em} .stem .s.lead{text-indent:0}
 .stem .cue{border-bottom:2px solid var(--acc);font-weight:700;padding-bottom:1px}
 .stem .cue2{border-bottom:1px dashed var(--pri);font-weight:400;padding-bottom:1px}
@@ -297,7 +301,7 @@ button,select{font:inherit;color:inherit;cursor:pointer}
           color:var(--pri);padding:2px 0;border-radius:2px;line-height:1.6}
 .stmt .mk:hover{background:var(--sunken)}
 .stmt .bd{font-family:var(--disp);font-size:var(--qsize);line-height:var(--qlh);
-          display:flex;flex-direction:column;gap:.35em}
+          display:flex;flex-direction:column;gap:.35em;max-width:40em}
 .stmt[data-v="o"]{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 6%,var(--surface))}
 .stmt[data-v="x"]{border-color:var(--ng);background:color-mix(in srgb,var(--ng) 6%,var(--surface))}
 .stmt[data-v="o"] .mk{color:var(--ok)} .stmt[data-v="x"] .mk{color:var(--ng)}
@@ -320,7 +324,7 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .opt:hover:not([disabled]){border-color:var(--pri);background:var(--sunken)}
 .opt .m{font-family:var(--gothic);font-size:14px;color:var(--pri);font-weight:700;
         line-height:var(--qlh);text-align:center}
-.opt .bd{display:flex;flex-direction:column;gap:.35em}
+.opt .bd{display:flex;flex-direction:column;gap:.35em;max-width:40em}
 .opt[disabled]{cursor:default}
 .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,var(--surface))}
 .opt.wrong{border-color:var(--ng);background:color-mix(in srgb,var(--ng) 9%,var(--surface))}
@@ -366,13 +370,26 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .ghost[aria-pressed="true"]{border-color:var(--vio);color:var(--vio);background:var(--vio-soft)}
 .ghost[disabled]{opacity:.4}
 
-.result{text-align:center;padding:22px 0 6px}
-.result .score{font-family:var(--mono);font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
-.result .score small{font-size:20px;color:var(--ink-3)}
-.result .judge{font-family:var(--disp);font-size:22px;letter-spacing:.14em;margin-top:10px;font-weight:800}
-.result .judge.pass{color:var(--ok)} .result .judge.fail{color:var(--ng)}
-.result .line{font-size:12.5px;color:var(--ink-2);margin-top:6px}
-.gained{font-family:var(--mono);font-size:13px;color:var(--gold);margin-top:8px}
+.result{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+        padding:20px 18px 17px;margin-bottom:6px}
+.result .rtop{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}  /* .top はヘッダー用。衝突させない */
+.result .score{font-family:var(--mono);font-size:62px;line-height:.92;font-variant-numeric:tabular-nums;
+               letter-spacing:-.02em}
+.result .score small{font-size:22px;color:var(--ink-3);letter-spacing:0}
+.result .judge{font-family:var(--disp);font-size:17px;letter-spacing:.1em;font-weight:700;
+               padding:4px 13px;border-radius:var(--rs);color:var(--on-pri)}
+.result .judge.pass{background:var(--ok)} .result .judge.fail{background:var(--ng)}
+.result .line{font-size:12.5px;color:var(--ink-2);margin-top:8px;line-height:1.75}
+/* 合格基準点との位置関係。1本の目盛りに得点と基準点を重ねる */
+.scale{position:relative;display:block;height:10px;background:var(--sunken);
+       border:1px solid var(--rule-2);margin:15px 0 7px}
+.scale i{position:absolute;left:0;top:0;bottom:0;display:block}
+.scale b{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--ink);border-radius:1px}
+.scale b::after{content:attr(data-l);position:absolute;left:50%;transform:translateX(-50%);
+                top:-17px;font-family:var(--mono);font-size:10px;color:var(--ink-2);white-space:nowrap}
+.scmark{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;
+        color:var(--ink-4);margin-bottom:10px}
+.gained{font-family:var(--mono);font-size:12.5px;color:var(--gold);margin-top:9px}
 .breakdown{display:flex;flex-direction:column;gap:8px}
 .br{display:grid;grid-template-columns:126px 1fr 60px;gap:10px;align-items:center;font-size:12.5px}
 .br .n{color:var(--ink-2)}
@@ -1111,10 +1128,18 @@ function renderResult(score,pass,answered){
   app.className='wrap';
   app.innerHTML=`
     <div class="result">
-      <div class="score">${score}<small>/${total}</small></div>
-      ${pass!=null?`<div class="judge ${ok?'pass':'fail'}">${ok?'合格':'不合格'}</div>
-        <div class="line">${esc(ses.title)}の合格基準点は ${pass}問（今回の正答率 ${pct(score,total)}%）</div>`
-       :`<div class="line">正答率 ${pct(score,total)}%${answered<ses.qs.length?`　未解答 ${ses.qs.length-answered}問`:''}</div>`}
+      <div class="rtop">
+        <span class="score">${score}<small>/${total}</small></span>
+        ${pass!=null?`<span class="judge ${ok?'pass':'fail'}">${ok?'合格':'不合格'}</span>`:''}
+        <span class="line" style="margin:0">正答率 ${pct(score,total)}%</span>
+      </div>
+      ${pass!=null?`<span class="scale">
+          <i style="width:${pct(score,total)}%;background:var(${ok?'--ok':'--ng'})"></i>
+          <b data-l="合格 ${pass}" style="left:calc(${pct(pass,total)}% - 1px)"></b></span>
+        <div class="scmark"><span>0</span><span>${total}</span></div>
+        <div class="line">${esc(ses.title)}の合格基準点は ${pass}問。今回は ${score}問で
+          ${ok?`基準を ${score-pass}問 上回りました`:`あと ${pass-score}問 でした`}。</div>`
+       :`<div class="line">${answered<ses.qs.length?`未解答 ${ses.qs.length-answered}問`:'全問解答'}</div>`}
       <div class="line">所要 ${mmss(totMs)}　1問あたり ${total?mmss(totMs/total):'—'}</div>
       ${ses.gain?`<div class="gained">+${ses.gain} XP　現在 ${rankOf(S.xp).grade}</div>`:''}
     </div>
