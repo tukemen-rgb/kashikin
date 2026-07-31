@@ -90,8 +90,10 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .h2{font-family:var(--gothic);font-size:13.5px;font-weight:700;letter-spacing:0;
     color:var(--ink);margin:24px 0 8px;display:flex;align-items:center;gap:9px;
     border-left:4px solid var(--pri);padding-left:9px;line-height:1.5}
-.h2 .more{background:none;border:none;font-size:11.5px;color:var(--pri);
-          padding:0;margin-left:auto;text-decoration:underline}
+.h2 .more{background:none;border:none;font-size:11.5px;color:var(--ink-3);
+          padding:0;margin-left:auto;font-weight:400}
+.h2 .more::after{content:" ›";color:var(--pri);font-weight:700}
+.h2 .more:hover{color:var(--pri)}
 .hero{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
       padding:14px 15px 13px;display:flex;flex-direction:column;gap:12px}
 .why{display:flex;align-items:center;gap:14px}
@@ -136,20 +138,23 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .srow .l{font-size:10.5px;color:var(--ink-3);letter-spacing:.08em}
 .secs{display:flex;flex-direction:column;background:var(--surface);
       border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
-.secrow{display:grid;grid-template-columns:5px minmax(0,1fr) auto;gap:11px;align-items:center;
-        background:var(--surface);padding:9px 13px;width:100%;text-align:left;
+.secrow{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:12px;align-items:center;
+        background:var(--surface);padding:11px 13px;width:100%;text-align:left;
         border:none;border-top:1px solid var(--rule-2)}
+.secrow.flat{padding:9px 13px}
 .secrow:first-child{border-top:none}
 .secrow:hover{background:var(--sunken)}
-.secrow .swatch{width:5px;height:26px;display:block}
+.secrow .swatch{width:4px;height:20px;display:block}
+.secrow.flat .swatch{height:16px}
 .secrow .body{display:block;min-width:0}
 .secrow .nm{font-family:var(--disp);font-size:14.5px;display:block;font-weight:700}
 .secrow .track{display:block;height:4px;background:var(--sunken);border-radius:2px;
                overflow:hidden;margin-top:5px}
 .secrow .track i{display:block;height:100%;border-radius:2px}
-.secrow .val{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);text-align:right;
-             font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.5}
-.secrow .val em{font-style:normal;color:var(--ink-4);font-size:11px}
+.secrow .val{font-family:var(--mono);font-size:14px;color:var(--ink);text-align:right;
+             font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.4}
+.secrow .val em{font-style:normal;color:var(--ink-4);font-size:11.5px}
+.secrow .val b{display:block;font-size:11.5px;font-weight:600;color:var(--ink-3);margin-top:1px}
 .rankbar{display:flex;align-items:center;gap:13px;margin-bottom:13px}
 .rankseal{position:relative;width:52px;height:52px;flex-shrink:0;display:grid;place-items:center;
           border:2px solid var(--foil);border-radius:2px;

@@ -89,38 +89,42 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .ds-note{font-size:11.5px;color:var(--ink-3);line-height:1.75}
 .secs{display:flex;flex-direction:column;background:var(--surface);
       border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
-.secrow{display:grid;grid-template-columns:5px minmax(0,1fr) auto;gap:11px;align-items:center;
-        background:var(--surface);padding:9px 13px;width:100%;text-align:left;
+.secrow{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:12px;align-items:center;
+        background:var(--surface);padding:11px 13px;width:100%;text-align:left;
         border:none;border-top:1px solid var(--rule-2)}
+.secrow.flat{padding:9px 13px}
 .secrow:first-child{border-top:none}
 .secrow:hover{background:var(--sunken)}
-.secrow .swatch{width:5px;height:26px;display:block}
+.secrow .swatch{width:4px;height:20px;display:block}
+.secrow.flat .swatch{height:16px}
 .secrow .body{display:block;min-width:0}
 .secrow .nm{font-family:var(--disp);font-size:14.5px;display:block;font-weight:700}
 .secrow .track{display:block;height:4px;background:var(--sunken);border-radius:2px;
                overflow:hidden;margin-top:5px}
 .secrow .track i{display:block;height:100%;border-radius:2px}
-.secrow .val{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);text-align:right;
-             font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.5}
-.secrow .val em{font-style:normal;color:var(--ink-4);font-size:11px}
+.secrow .val{font-family:var(--mono);font-size:14px;color:var(--ink);text-align:right;
+             font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.4}
+.secrow .val em{font-style:normal;color:var(--ink-4);font-size:11.5px}
+.secrow .val b{display:block;font-size:11.5px;font-weight:600;color:var(--ink-3);margin-top:1px}
 .topics{display:flex;flex-direction:column;background:var(--surface);
         border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
-.trow{position:relative;display:grid;grid-template-columns:5px minmax(0,1fr) 64px 48px;
-      gap:11px;align-items:center;background:var(--surface);padding:9px 13px;
+.trow{position:relative;display:grid;grid-template-columns:4px minmax(0,1fr) auto auto;
+      gap:12px;align-items:center;background:var(--surface);padding:9px 13px;
       width:100%;text-align:left;border:none;border-top:1px solid var(--rule-2);font-size:13px}
 .trow:first-child{border-top:none}
 .trow:hover{background:var(--sunken)}
-.trow .tsec{width:5px;height:28px;display:block}
+.trow .tsec{width:4px;height:22px;display:block}
 .trow .tbody{display:block;min-width:0}
 .trow .tn{display:block;font-family:var(--disp);font-size:14.5px;font-weight:700;
           line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .trow .tart{display:block;font-size:10.5px;color:var(--ink-3);margin-top:2px;
             overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.trow .f{font-family:var(--mono);font-size:12px;color:var(--ink-2);text-align:right;
-         line-height:1.35;font-variant-numeric:tabular-nums}
-.trow .f em{font-style:normal;font-size:9.5px;color:var(--ink-4);font-family:var(--gothic)}
+.trow .f{font-family:var(--mono);font-size:13px;color:var(--ink-2);text-align:right;
+         line-height:1.35;font-variant-numeric:tabular-nums;white-space:nowrap}
+.trow .f em{font-style:normal;font-size:10.5px;color:var(--ink-4);font-family:var(--gothic)}
 .trow .acc{font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;
-           font-variant-numeric:tabular-nums}
+           font-variant-numeric:tabular-nums;min-width:2.6em;white-space:nowrap}
+.trow .acc em{font-style:normal;font-size:10.5px;font-weight:400}
 .trow .tbar{position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
 .trow .tbar i{display:block;height:100%}
 .list{display:flex;flex-direction:column;background:var(--surface);
